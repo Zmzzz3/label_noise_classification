@@ -6,12 +6,10 @@ import sys
 from pathlib import Path
 
 from noisy_label.config import TrainConfig
-from noisy_label.data import load_npz
 from noisy_label.experiment import train_model
-from noisy_label.results import load_runs, summarize_runs, write_runs, write_summary
+from noisy_label.results import summarize_runs, write_runs, write_summary
 
-SEEDS = [0]
-
+SEEDS = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 
 def exp(tlr, reg, dataset, output, lr=1e-3) -> int:
 

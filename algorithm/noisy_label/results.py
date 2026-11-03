@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import csv
 import json
+import torch
 from pathlib import Path
 from statistics import mean, stdev
 from typing import Any
@@ -77,6 +78,7 @@ def summarize_runs(rows: list[dict[str, Any]]) -> dict[str, Any]:
             stdev(validation_accuracies) if len(rows) > 1 else 0.0
         ),
         "total_training_seconds": sum(float(row["training_seconds"]) for row in rows),
+        "T_stdev": 0 if any(row["best_T"] is None for row in rows) else torch.sum(torch.std(torch.stack([row["best_T"] for row in rows]), dim=0, unbiased=False)).item()
     }
 
 
