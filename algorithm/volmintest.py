@@ -8,7 +8,7 @@ from noisy_label.config import TrainConfig
 from noisy_label.experiment import train_model
 from noisy_label.results import summarize_runs, write_runs, write_summary
 
-SEEDS = [0, 1, 2, 3, 4]
+SEEDS = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 
 def exp(tlr, reg, dataset, output, lr=1e-3) -> int:
 
@@ -53,21 +53,14 @@ def exp(tlr, reg, dataset, output, lr=1e-3) -> int:
     return 0
 
 def lr():
-    lr = [0.001, 0.01, 0.1]
+    lr = [0.01, 0.1]
     reg = 0.0001
 
     for l in lr:
         print(l, reg)
-        path = Path("data/FashionMNIST0.3.npz")
-        output = Path("results") / "mnist0.3" / f"volmin_lr{l}"
-        exp(l, reg, path, output)
 
         path = Path("data/FashionMNIST0.6.npz")
         output = Path("results") / "mnist0.6" / f"volmin_lr{l}"
-        exp(l, reg, path, output)
-
-        path = Path("data/CIFAR.npz")
-        output = Path("results") / "cifar" / f"volmin_lr{l}"
         exp(l, reg, path, output)
 
 def mnist03():
