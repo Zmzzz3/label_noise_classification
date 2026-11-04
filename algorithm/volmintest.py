@@ -1,7 +1,5 @@
 from __future__ import annotations
 
-import argparse
-import importlib
 import sys
 from pathlib import Path
 
@@ -53,16 +51,55 @@ def exp(tlr, reg, dataset, output, lr=1e-3) -> int:
     )
     return 0
 
+def lr():
+    lr = [0.001, 0.01, 0.1]
+    reg = 0.0001
+
+    for l in lr:
+        print(l, reg)
+        path = Path("data/FashionMNIST0.3.npz")
+        output = Path("results") / "mnist0.3" / f"volmin_lr{l}"
+        exp(l, reg, path, output)
+
+        path = Path("data/FashionMNIST0.6.npz")
+        output = Path("results") / "mnist0.6" / f"volmin_lr{l}"
+        exp(l, reg, path, output)
+
+        path = Path("data/CIFAR.npz")
+        output = Path("results") / "cifar" / f"volmin_lr{l}"
+        exp(l, reg, path, output)
+
+def mnist03():
+    path = Path("data/FashionMNIST0.3.npz")
+    lr = 0.1
+    reg = [0.0001, 0.0005, 0.001]
+
+    for r in reg:
+        print(lr, r)
+        output = Path("results") / "mnist0.3" / f"volmin_reg{r}"
+        exp(lr, r, path, output)
 
 def mnist06():
     path = Path("data/FashionMNIST0.6.npz")
-    tlr = [0.015, 0.02, 0.025]
-    reg = [0.003, 0.0035, 0.004]
+    lr = 0.1
+    reg = [0.0001, 0.0005, 0.001]
 
-    for t in tlr:
-        for r in reg:
-            print(t, r)
-            output = Path("results") / "mnist0.6" / f"volmin_tlr{tlr}_reg{reg}"
-            exp(t, r, path, output)
+    for r in reg:
+        print(lr, r)
+        output = Path("results") / "mnist0.6" / f"volmin_reg{r}"
+        exp(lr, r, path, output)
 
+def cifar():
+    path = Path("data/CIFAR.npz")
+    lr = 0.1
+    reg = [0.0001, 0.0005, 0.001]
+
+    for r in reg:
+        print(lr, r)
+        output = Path("results") / "cifar" / f"volmin_reg{r}"
+        exp(lr, r, path, output)
+
+lr()
+mnist03()
 mnist06()
+cifar()
